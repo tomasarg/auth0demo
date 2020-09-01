@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Auth0 Demo</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet"
+    type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/animate.css@^4.0.0/animate.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/quasar@1.12.2/dist/quasar.min.css" rel="stylesheet" type="text/css">
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+
+  <style>
+    .my-card {
+      width: 100%;
+      max-width: 500px;
+      min-width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="top" class="header">
+    <div id="app">
+      <q-layout view="hHh lpR fFf">
+
+        <q-header class="bg-primary text-white">
+          <q-toolbar>
+            <q-toolbar-title @click="setMode('anonymous')">
+              <q-avatar>
+                <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
+              </q-avatar>
+              Auth0-Quasar Demo
+            </q-toolbar-title>
+          </q-toolbar>
+        </q-header>
+
+        <q-page-container>
+          <q-page class="flex">
+            <!-- If we are anonymous -->
+            <div v-if="mode === 'anonymous'" class="absolute-center">
+              <q-card>
+                <q-card-actions>
+                  <q-btn class="full-width" @click="login()" flat>Login</q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
+
+            <!-- If we are authenticated -->
+            <div v-if="mode === 'authenticated'" class="absolute-center">
+
+              <q-card class="my-card">
+                <img :src="user.picture">
+
+                <q-list>
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-icon color="primary" name="account_circle" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>{{ user.nickname }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-icon color="primary" name="email" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>{{ user.email }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-icon color="red" name="language" />
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>{{ user["https://example.com/country"] }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-card>
+              <p></p>
+              <q-card>
+                <q-card-actions>
+                  <q-btn class="full-width" @click="logout()" flat>Logout</q-btn>
+                </q-card-actions>
+              </q-card>
+            </div>
+          </q-page>
+        </q-page-container>
+
+        <q-dialog v-model="alert">
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">Alert</div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
+              {{ alertMessage }}
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn flat label="OK" color="primary" v-close-popup />
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
+
+      </q-layout>
+    </div>
+  </header>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@^2.0.0/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/quasar@1.12.2/dist/quasar.umd.min.js"></script>
+  <script src="https://unpkg.com/axios@0.19.2/dist/axios.min.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.9/auth0-spa-js.production.js"></script>
+  <script src="scripts/vueLogic.js"></script>
+
+</body>
+
+</html>
